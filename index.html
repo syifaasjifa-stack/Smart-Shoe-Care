@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZODEQ Smart Shoe Care | Inovasi AIoT Kelompok 8</title>
+    
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        zodeq: {
+                            blue: '#2563EB',
+                            cyan: '#06B6D4',
+                            dark: '#0B1120',
+                            card: '#111827',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'scan': 'scan 2.2s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        scan: {
+                            '0%': { top: '0%' },
+                            '50%': { top: '95%' },
+                            '100%': { top: '0%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Glassmorphism & Scrollbar Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .dark .glass-panel {
+            background: rgba(17, 24, 39, 0.75);
+            border: 1px solid rgba(51, 65, 85, 0.6);
+        }
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.12), 0 8px 10px -6px rgba(6, 182, 212, 0.1);
+        }
+        .cube-glow-blue {
+            box-shadow: inset 0 0 25px rgba(37, 99, 235, 0.45), 0 0 20px rgba(6, 182, 212, 0.25);
+        }
+        .cube-glow-purple {
+            box-shadow: inset 0 0 25px rgba(168, 85, 247, 0.45), 0 0 20px rgba(168, 85, 247, 0.25);
+        }
+        .cube-glow-amber {
+            box-shadow: inset 0 0 25px rgba(245, 158, 11, 0.4), 0 0 15px rgba(245, 158, 11, 0.2);
+        }
+        .cube-glow-red {
+            box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.7), 0 0 25px rgba(239, 68, 68, 0.5);
+        }
+        /* Custom subtle grid pattern */
+        .bg-tech-grid {
+            background-size: 32px 32px;
+            background-image: radial-gradient(circle, rgba(37, 99, 235, 0.12) 1px, transparent 1px);
+        }
+        .dark .bg-tech-grid {
+            background-image: radial-gradient(circle, rgba(6, 182, 212, 0.14) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-zodeq-dark dark:text-slate-100 transition-colors duration-300 bg-tech-grid selection:bg-blue-600 selection:text-white">
+
+    <!-- ==================== NAVIGATION BAR ==================== -->
+    <nav class="sticky top-0 z-50 glass-panel border-b border-slate-200/70 dark:border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Brand Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-blue-600/30 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-microchip text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="font-display font-extrabold text-xl tracking-tight bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">ZODEQ</span>
+                        <span class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400 -mt-1">Smart Shoe Care AIoT</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex items-center space-x-7 text-sm font-medium">
+                    <a href="#inovasi" class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors">Inovasi & Target</a>
+                    <a href="#business-value" class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors">Business Value</a>
+                    <a href="#alur-kerja" class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors">Alur Kerja</a>
+                    <a href="#simulator" class="px-3.5 py-1.5 rounded-full bg-blue-600/10 text-blue-600 dark:bg-cyan-500/15 dark:text-cyan-400 font-semibold hover:bg-blue-600 hover:text-white transition-all flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                        Simulator IoT
+                    </a>
+                    <a href="#risiko" class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors">Keamanan & Risiko</a>
+                    <a href="#tim" class="text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors">Kelompok 8</a>
+                </div>
+
+                <!-- Theme Toggle & Mobile Menu Button -->
+                <div class="flex items-center gap-2.5">
+                    <button id="themeToggle" aria-label="Ubah Tema" class="p-2.5 rounded-xl bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">
+                        <i id="themeIcon" class="fa-solid fa-moon text-sm"></i>
+                    </button>
+                    <button id="mobileMenuBtn" aria-label="Menu" class="md:hidden p-2.5 rounded-xl bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobileMenu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95">
+            <a href="#inovasi" class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-50 dark:hover:bg-slate-800">Inovasi & Target Pengguna</a>
+            <a href="#business-value" class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-50 dark:hover:bg-slate-800">2 Business Values Utama</a>
+            <a href="#alur-kerja" class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-50 dark:hover:bg-slate-800">Alur Kerja AIoT</a>
+            <a href="#simulator" class="block px-3 py-2 rounded-lg text-sm font-semibold text-blue-600 dark:text-cyan-400 bg-blue-50 dark:bg-slate-800">Live Simulator IoT App</a>
+            <a href="#risiko" class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-50 dark:hover:bg-slate-800">Risiko & Mitigasi Keamanan</a>
+            <a href="#tim" class="block px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-50 dark:hover:bg-slate-800">Tim Kelompok 8</a>
+        </div>
+    </nav>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <header class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
+        <!-- Ambient Gradient Orbs -->
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-32 -right-24 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Content -->
+                <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-600/10 dark:bg-cyan-500/10 border border-blue-600/20 dark:border-cyan-400/20 text-blue-700 dark:text-cyan-300 text-xs font-semibold tracking-wide">
+                        <i class="fa-solid fa-sparkles"></i>
+                        <span>AIoT BUSINESS ANALYSIS • KELOMPOK 8 (AB 2)</span>
+                    </div>
+
+                    <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.12]">
+                        Perawatan Sepatu Pintar Berbasis <span class="bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-500 bg-clip-text text-transparent">AI & IoT</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        <strong>ZODEQ Smart Shoe Care</strong> mengintegrasikan sensor kelembapan, deteksi gas bau (VOC), dan kecerdasan buatan untuk menyesuaikan suhu serta durasi sterilisasi otomatis sesuai material sepatu—dipantau langsung dari genggaman Anda.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#simulator" class="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold shadow-xl shadow-blue-600/25 flex items-center justify-center gap-2.5 transition-all hover:scale-[1.02]">
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+                            <span>Coba Simulator IoT Live</span>
+                        </a>
+                        <a href="#inovasi" class="w-full sm:w-auto px-7 py-3.5 rounded-2xl glass-panel hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold flex items-center justify-center gap-2 transition-all">
+                            <span>Pelajari Inovasi</span>
+                            <i class="fa-solid fa-arrow-down text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Quick Key Metrics -->
+                    <div class="grid grid-cols-3 gap-4 pt-4 border-t border-slate-200/80 dark:border-slate-800">
+                        <div>
+                            <p class="font-display font-bold text-2xl text-blue-600 dark:text-cyan-400">Dual Sensor</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Kelembapan & Gas VOC</p>
+                        </div>
+                        <div>
+                            <p class="font-display font-bold text-2xl text-blue-600 dark:text-cyan-400">AI Adaptive</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Kulit, Kanvas & Mesh</p>
+                        </div>
+                        <div>
+                            <p class="font-display font-bold text-2xl text-emerald-600 dark:text-emerald-400">Auto Cut-Off</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Proteksi Panas & Ozon</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Right Visual: Interactive 3D-Style ZODEQ Smart Cabinet Preview -->
+                <div class="lg:col-span-6">
+                    <div class="relative max-w-lg mx-auto animate-float">
+                        <!-- Metallic Smart Rack Frame -->
+                        <div class="rounded-3xl p-4 sm:p-6 bg-gradient-to-b from-slate-800 via-slate-900 to-slate-950 border-2 border-slate-700 shadow-2xl relative">
+                            <!-- Top Wood & Brushed Metal Accent -->
+                            <div class="flex items-center justify-between px-3 py-2 mb-4 rounded-xl bg-gradient-to-r from-amber-950/80 via-stone-900 to-amber-950/80 border border-amber-800/40">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span class="text-xs font-mono text-slate-300 tracking-wider">ZODEQ-OS v2.4 • CONNECTED</span>
+                                </div>
+                                <span class="font-display font-bold text-xs tracking-widest text-amber-200/90">ZODEQ</span>
+                            </div>
+
+                            <!-- 4 Modular Smart Cubes Visual Grid -->
+                            <div class="grid grid-cols-2 gap-3.5">
+                                <!-- Cube Visual 1 -->
+                                <div class="rounded-2xl p-3.5 bg-slate-900/90 border border-amber-500/40 cube-glow-amber relative overflow-hidden">
+                                    <div class="flex justify-between items-center text-[11px] mb-2">
+                                        <span class="font-mono text-amber-300 font-semibold">KUBUS 01</span>
+                                        <span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px]">88% Lembap</span>
+                                    </div>
+                                    <div class="h-20 flex flex-col items-center justify-center text-center">
+                                        <i class="fa-solid fa-shoe-prints text-3xl text-slate-200 mb-1.5"></i>
+                                        <span class="text-xs font-semibold text-white">Sneakers Kanvas</span>
+                                    </div>
+                                    <div class="mt-2 pt-2 border-t border-slate-800 flex justify-between text-[10px] text-slate-400">
+                                        <span>VOC: Sedang</span>
+                                        <span class="text-amber-400">Siap Rawat</span>
+                                    </div>
+                                </div>
+
+                                <!-- Cube Visual 2 (AI Active Mode) -->
+                                <div class="rounded-2xl p-3.5 bg-slate-900/90 border border-blue-500/60 cube-glow-blue relative overflow-hidden">
+                                    <div class="flex justify-between items-center text-[11px] mb-2">
+                                        <span class="font-mono text-cyan-300 font-semibold">KUBUS 02</span>
+                                        <span class="px-2 py-0.5 rounded-full bg-blue-500/30 text-cyan-200 text-[10px] flex items-center gap-1">
+                                            <i class="fa-solid fa-microchip text-[9px]"></i> AI Mode
+                                        </span>
+                                    </div>
+                                    <div class="h-20 flex flex-col items-center justify-center text-center">
+                                        <div class="w-11 h-11 rounded-xl bg-blue-600/30 border border-cyan-400/50 flex items-center justify-center mb-1">
+                                            <span class="font-display font-bold text-sm text-cyan-300">AI</span>
+                                        </div>
+                                        <span class="text-xs font-semibold text-white">Sport / Mesh</span>
+                                    </div>
+                                    <div class="mt-2 pt-2 border-t border-slate-800 flex justify-between text-[10px] text-cyan-300">
+                                        <span>Suhu: 42°C</span>
+                                        <span>VOC: Sedang</span>
+                                    </div>
+                                </div>
+
+                                <!-- Cube Visual 3 (UV/Ozone Sterilization) -->
+                                <div class="rounded-2xl p-3.5 bg-slate-900/90 border border-purple-500/50 cube-glow-purple relative overflow-hidden">
+                                    <div class="flex justify-between items-center text-[11px] mb-2">
+                                        <span class="font-mono text-purple-300 font-semibold">KUBUS 03</span>
+                                        <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px]">29% Kering</span>
+                                    </div>
+                                    <div class="h-20 flex flex-col items-center justify-center text-center">
+                                        <i class="fa-solid fa-briefcase text-3xl text-purple-200 mb-1.5"></i>
+                                        <span class="text-xs font-semibold text-white">Pantofel Kulit</span>
+                                    </div>
+                                    <div class="mt-2 pt-2 border-t border-slate-800 flex justify-between text-[10px] text-slate-400">
+                                        <span>VOC: Rendah</span>
+                                        <span class="text-emerald-400">Steril UV</span>
+                                    </div>
+                                </div>
+
+                                <!-- Cube Visual 4 (Standby / Ready) -->
+                                <div class="rounded-2xl p-3.5 bg-slate-900/90 border border-slate-700/80 relative overflow-hidden">
+                                    <div class="flex justify-between items-center text-[11px] mb-2">
+                                        <span class="font-mono text-slate-400 font-semibold">KUBUS 04</span>
+                                        <span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 text-[10px]">Standby</span>
+                                    </div>
+                                    <div class="h-20 flex flex-col items-center justify-center text-center">
+                                        <i class="fa-solid fa-plus-circle text-2xl text-slate-600 mb-1.5"></i>
+                                        <span class="text-xs font-medium text-slate-400">Slot Kosong</span>
+                                    </div>
+                                    <div class="mt-2 pt-2 border-t border-slate-800 flex justify-between text-[10px] text-slate-500">
+                                        <span>Auto-Detect</span>
+                                        <span>0.2W Idle</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Base Pedestal -->
+                            <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                                <span><i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i>Thermal & Ozone Guard Aktif</span>
+                                <span class="text-cyan-400 font-medium">Smart Rack #01</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== PAIN POINTS & INTERACTIVE COMPARISON ==================== -->
+    <section id="inovasi" class="py-16 sm:py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-cyan-400">Konsep & Inovasi AIoT</span>
+                <h2 class="font-display font-extrabold text-3xl sm:text-4xl mt-2 mb-4">Mengapa ZODEQ Jauh Lebih Pintar dari Rak Digital Biasa?</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+                    Masalah di lapangan menunjukkan sepatu basah memicu jamur dan bau menyengat, sementara suhu pemanasan yang seragam justru merusak material kulit atau suede.
+                </p>
+            </div>
+
+            <!-- Interactive Comparison Switcher (Mobile Friendly + Side-by-Side Desktop) -->
+            <div class="flex justify-center mb-8 md:hidden">
+                <div class="inline-flex p-1 rounded-xl bg-slate-200 dark:bg-slate-800">
+                    <button onclick="switchComparison('biasa')" id="btnCompBiasa" class="px-4 py-2 rounded-lg text-xs font-semibold transition-all bg-white dark:bg-slate-700 shadow">Rak Digital Biasa</button>
+                    <button onclick="switchComparison('zodeq')" id="btnCompZodeq" class="px-4 py-2 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-300">Inovasi AIoT ZODEQ</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                <!-- Card 1: Versi Digital Biasa -->
+                <div id="cardCompBiasa" class="glass-panel rounded-3xl p-7 sm:p-8 border-slate-300/80 dark:border-slate-700/80 relative">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400">
+                                <i class="fa-solid fa-fan text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display font-bold text-xl">Versi Digital Biasa</h3>
+                                <p class="text-xs text-slate-500">Sistem Timer & Kipas Konvensional</p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-semibold">Konvensional</span>
+                    </div>
+
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3.5 p-3.5 rounded-2xl bg-slate-100/80 dark:bg-slate-800/50">
+                            <i class="fa-solid fa-circle-xmark text-rose-500 mt-0.5 text-base"></i>
+                            <div>
+                                <strong class="block text-slate-800 dark:text-slate-200">Aktivasi Manual</strong>
+                                <span class="text-slate-600 dark:text-slate-400">Kipas dan lampu UV harus dinyalakan atau diatur timer secara manual.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3.5 p-3.5 rounded-2xl bg-slate-100/80 dark:bg-slate-800/50">
+                            <i class="fa-solid fa-circle-xmark text-rose-500 mt-0.5 text-base"></i>
+                            <div>
+                                <strong class="block text-slate-800 dark:text-slate-200">Ketergantungan Pengguna</strong>
+                                <span class="text-slate-600 dark:text-slate-400">Pengguna wajib mengingat jadwal pembersihan setiap hari.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3.5 p-3.5 rounded-2xl bg-slate-100/80 dark:bg-slate-800/50">
+                            <i class="fa-solid fa-circle-xmark text-rose-500 mt-0.5 text-base"></i>
+                            <div>
+                                <strong class="block text-slate-800 dark:text-slate-200">Tanpa Data Kondisi</strong>
+                                <span class="text-slate-600 dark:text-slate-400">Tidak ada informasi tingkat kelembapan maupun bau sepatu sebenarnya.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3.5 p-3.5 rounded-2xl bg-slate-100/80 dark:bg-slate-800/50">
+                            <i class="fa-solid fa-circle-xmark text-rose-500 mt-0.5 text-base"></i>
+                            <div>
+                                <strong class="block text-slate-800 dark:text-slate-200">Mode Seragam (Berisiko Merusak Bahan)</strong>
+                                <span class="text-slate-600 dark:text-slate-400">Durasi dan suhu pemanasan sama untuk semua jenis material sepatu.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: Inovasi AIoT ZODEQ -->
+                <div id="cardCompZodeq" class="hidden md:block rounded-3xl p-7 sm:p-8 bg-gradient-to-br from-blue-600/10 via-cyan-500/5 to-indigo-600/10 glass-panel border-2 border-blue-500/50 dark:border-cyan-400/50 shadow-xl shadow-blue-600/10 relative">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-blue-600/30">
+                                <i class="fa-solid fa-brain text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display font-bold text-xl text-blue-700 dark:text-cyan-300">Inovasi AIoT ZODEQ</h3>
+                                <p class="text-xs text-slate-600 dark:text-slate-400">Deteksi Mandiri & Perawatan Adaptif AI</p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-blue-600 text-white text-xs font-semibold shadow">AIoT Smart</span>
+                    </div>
+
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white/80 dark:bg-slate-900/70 border border-blue-500/20">
+                            <i class="fa-solid fa-circle-check text-emerald-500 mt-0.5 text-base"></i>
+                            <div>
+                                <strong class="block text-slate-900 dark:text-white">Sensor Ganda Tiap Kubus</strong>
+                                <span class="text-slate-600 dark:text-slate-300">Mendeteksi kadar kelembapan dan gas bau (VOC) secara akurat & otomatis.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white/80 dark:bg-slate-900/70 border border-blue-500/20">
+                            <i class="fa-solid fa-circle-check text-emerald-500 mt-0.5 text-base"></i>
+                            <div>
+                                <strong class="block text-slate-900 dark:text-white">Keputusan Otomatis AI</strong>
+                                <span class="text-slate-600 dark:text-slate-300">AI menentukan mode suhu dan durasi perawatan sesuai jenis bahan sepatu.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white/80 dark:bg-slate-900/70 border border-blue-500/20">
+                            <i class="fa-solid fa-circle-check text-emerald-500 mt-0.5 text-base"></i>
+                            <div>
+                                <strong class="block text-slate-900 dark:text-white">Monitoring Real-Time HP</strong>
+                                <span class="text-slate-600 dark:text-slate-300">Status kelembapan, VOC, dan progres perawatan dipantau langsung di aplikasi.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white/80 dark:bg-slate-900/70 border border-blue-500/20">
+                            <i class="fa-solid fa-circle-check text-emerald-500 mt-0.5 text-base"></i>
+                            <div>
+                                <strong class="block text-slate-900 dark:text-white">Efisiensi Energi Otomatis</strong>
+                                <span class="text-slate-600 dark:text-slate-300">Sistem mati otomatis segera setelah sepatu terdeteksi kering dan steril.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Target Pengguna Section -->
+            <div class="mt-20">
+                <div class="text-center mb-10">
+                    <span class="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-cyan-400">Segmentasi Pasar</span>
+                    <h3 class="font-display font-bold text-2xl sm:text-3xl mt-1">Target Pengguna Utama</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Target 1 -->
+                    <div class="glass-panel glass-card-hover rounded-3xl p-6">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-600/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-graduation-cap text-xl"></i>
+                        </div>
+                        <h4 class="font-display font-bold text-lg mb-2">Pekerja & Mahasiswa Aktif</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Membutuhkan sepatu cepat kering dan bebas bau setelah kehujanan atau beraktivitas padat seharian di kampus maupun kantor.
+                        </p>
+                    </div>
+
+                    <!-- Target 2 -->
+                    <div class="glass-panel glass-card-hover rounded-3xl p-6">
+                        <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-gem text-xl"></i>
+                        </div>
+                        <h4 class="font-display font-bold text-lg mb-2">Kolektor Sepatu</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Membutuhkan suhu terukur yang dikontrol AI untuk menjaga material sensitif seperti kulit, kanvas, dan suede tetap awet tanpa retak.
+                        </p>
+                    </div>
+
+                    <!-- Target 3 -->
+                    <div class="glass-panel glass-card-hover rounded-3xl p-6">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-4">
+                            <i class="fa-solid fa-building text-xl"></i>
+                        </div>
+                        <h4 class="font-display font-bold text-lg mb-2">Penghuni Apartemen & Kos</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Menginginkan rak sepatu tertutup yang rapi, higienis, tidak menyebarkan bau ke ruangan, dengan pemantauan praktis lewat ponsel.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 2 BUSINESS VALUES UTAMA ==================== -->
+    <section id="business-value" class="py-16 sm:py-24 bg-slate-100/70 dark:bg-slate-900/50 border-y border-slate-200/70 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Dampak & Nilai Bisnis</span>
+                <h2 class="font-display font-extrabold text-3xl sm:text-4xl mt-2 mb-4">2 Business Values Utama ZODEQ</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+                    Menghadirkan solusi nyata bagi kesehatan pengguna sekaligus efisiensi finansial jangka panjang.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Business Value 1 -->
+                <div class="glass-panel glass-card-hover rounded-3xl p-8 border-l-4 border-l-emerald-500">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Business Value #1</span>
+                            <h3 class="font-display font-bold text-2xl">Kesehatan & Kenyamanan</h3>
+                        </div>
+                    </div>
+                    <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
+                        <div class="p-4 rounded-2xl bg-white/70 dark:bg-slate-800/60">
+                            <h4 class="font-bold text-slate-900 dark:text-white mb-1"><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Higienis Maksimal</h4>
+                            <p>Sepatu selalu dalam kondisi kering, bebas bau tidak sedap, dan steril dari pertumbuhan bakteri maupun jamur.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/70 dark:bg-slate-800/60">
+                            <h4 class="font-bold text-slate-900 dark:text-white mb-1"><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Cegah Penyakit Kulit Kaki</h4>
+                            <p>Mengurangi risiko masalah kesehatan kaki seperti infeksi jamur kulit dan kutu air akibat sepatu lembap.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Value 2 -->
+                <div class="glass-panel glass-card-hover rounded-3xl p-8 border-l-4 border-l-blue-600">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-600/15 text-blue-600 dark:text-cyan-400 flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-piggy-bank"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-cyan-400">Business Value #2</span>
+                            <h3 class="font-display font-bold text-2xl">Perpanjang Umur Sepatu & Hemat Biaya</h3>
+                        </div>
+                    </div>
+                    <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
+                        <div class="p-4 rounded-2xl bg-white/70 dark:bg-slate-800/60">
+                            <h4 class="font-bold text-slate-900 dark:text-white mb-1"><i class="fa-solid fa-check text-blue-600 dark:text-cyan-400 mr-2"></i>Perawatan Sesuai Bahan</h4>
+                            <p>Mode adaptif AI mencegah pelapukan lem sol dan keretakan pada material kulit, suede, maupun kanvas.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/70 dark:bg-slate-800/60">
+                            <h4 class="font-bold text-slate-900 dark:text-white mb-1"><i class="fa-solid fa-check text-blue-600 dark:text-cyan-400 mr-2"></i>Efisiensi Pengeluaran</h4>
+                            <p>Menghemat pengeluaran rutin untuk jasa laundry sepatu serta mengurangi frekuensi pembelian sepatu baru.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ALUR KERJA SMART SHOE CARE AIOT ==================== -->
+    <section id="alur-kerja" class="py-16 sm:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-cyan-400">Workflow Otomatis</span>
+                <h2 class="font-display font-extrabold text-3xl sm:text-4xl mt-2 mb-4">Alur Kerja Smart Shoe Care AIoT</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+                    Empat langkah cerdas tanpa perlu pengaturan manual yang rumit setiap hari.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+                <!-- Step 1 -->
+                <div class="glass-panel glass-card-hover rounded-3xl p-6 text-center relative">
+                    <div class="w-10 h-10 rounded-full bg-blue-600 text-white font-display font-bold flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-600/30">1</div>
+                    <div class="w-14 h-14 rounded-2xl bg-blue-600/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-lg mb-2">Simpan Sepatu</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">Pengguna meletakkan sepatu ke dalam salah satu kubus rak pintar ZODEQ.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="glass-panel glass-card-hover rounded-3xl p-6 text-center relative">
+                    <div class="w-10 h-10 rounded-full bg-cyan-600 text-white font-display font-bold flex items-center justify-center mx-auto mb-4 shadow-lg shadow-cyan-600/30">2</div>
+                    <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-wave-square"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-lg mb-2">Deteksi Sensor</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">Sensor ganda membaca tingkat kelembapan (%) dan konsentrasi gas bau VOC.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="glass-panel glass-card-hover rounded-3xl p-6 text-center relative">
+                    <div class="w-10 h-10 rounded-full bg-indigo-600 text-white font-display font-bold flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-600/30">3</div>
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-lg mb-2">Proses Otomatis AI</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">AI mengatur suhu pemanas, aliran udara, dan durasi sterilisasi sesuai bahan sepatu.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="glass-panel glass-card-hover rounded-3xl p-6 text-center relative">
+                    <div class="w-10 h-10 rounded-full bg-emerald-600 text-white font-display font-bold flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-600/30">4</div>
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-lg mb-2">Notifikasi HP</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-300">Aplikasi smartphone mengirim notifikasi bahwa sepatu telah kering, steril, dan siap dipakai.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== REAL-TIME IOT APP SIMULATOR ==================== -->
+    <section id="simulator" class="py-16 sm:py-24 bg-gradient-to-b from-slate-100 via-blue-50/40 to-slate-100 dark:from-slate-900/90 dark:via-slate-950 dark:to-slate-900/90 border-y border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 text-xs font-bold mb-3">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    LIVE INTERACTIVE IOT SIMULATOR
+                </div>
+                <h2 class="font-display font-extrabold text-3xl sm:text-4xl mb-3">Monitoring Real-Time via Smartphone</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+                    Uji langsung cara kerja aplikasi <strong>Smart Shoe Care</strong>. Jalankan siklus perawatan AI pada tiap kubus, pindai sepatu baru, atau uji sistem pemutus daya otomatis saat terjadi <em>Overheating</em>.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- LEFT: Interactive Smartphone App Frame (Based on Slide 10) -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="w-full max-w-[390px] rounded-[2.75rem] p-3 bg-slate-900 border-[4px] border-slate-700 shadow-2xl relative">
+                        <!-- Dynamic Island / Notch -->
+                        <div class="w-28 h-6 bg-black rounded-full mx-auto mb-2 flex items-center justify-end px-3">
+                            <span class="w-2 h-2 rounded-full bg-blue-500/80"></span>
+                        </div>
+
+                        <!-- Smartphone Screen Body -->
+                        <div class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 rounded-[2.1rem] overflow-hidden border border-slate-200 dark:border-slate-800">
+                            
+                            <!-- Status Bar -->
+                            <div class="px-5 pt-2 pb-1 flex justify-between items-center text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                                <span id="simClock">22:44</span>
+                                <div class="flex items-center gap-1.5">
+                                    <i class="fa-solid fa-wifi"></i>
+                                    <i class="fa-solid fa-battery-full text-emerald-500"></i>
+                                </div>
+                            </div>
+
+                            <!-- App Header -->
+                            <div class="px-4 py-3 flex items-center justify-between border-b border-slate-200/70 dark:border-slate-800">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow">
+                                        <i class="fa-solid fa-microchip text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-display font-bold text-sm leading-tight">Smart Shoe Care</h3>
+                                        <p class="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                                            <span id="rackConnectionDot" class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                                            Smart Rack #01 • Kos Tembalang
+                                        </p>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-full bg-slate-200/80 dark:bg-slate-800 text-[11px] font-medium flex items-center gap-1">
+                                    <i class="fa-regular fa-user"></i> Profil
+                                </span>
+                            </div>
+
+                            <!-- App Content Scroll Area -->
+                            <div class="p-4 space-y-3.5 max-h-[610px] overflow-y-auto">
+                                
+                                <!-- User Greeting & Safety Status Banner -->
+                                <div id="appSafetyBanner" class="p-3.5 rounded-2xl bg-white dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700 shadow-sm transition-all">
+                                    <p class="font-display font-bold text-sm">Halo, Aisyah Nur Azizah!</p>
+                                    <p id="appSystemStatusText" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium mt-0.5 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-shield-check"></i>
+                                        <span>3 Kubus Aktif • Sistem Keamanan Normal</span>
+                                    </p>
+                                </div>
+
+                                <!-- AIOT Smart Care Scan Banner -->
+                                <div class="p-4 rounded-2xl bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-600/20">
+                                    <span class="inline-block px-2 py-0.5 rounded bg-white/20 text-[10px] font-bold tracking-wider mb-1.5">AIOT SMART CARE</span>
+                                    <div class="flex items-center justify-between gap-2">
+                                        <div>
+                                            <h4 class="font-display font-bold text-sm leading-snug">Ingin Merawat Sepatu?</h4>
+                                            <p class="text-[11px] text-blue-100 mt-0.5">Deteksi kelembapan, bau VOC & jenis bahan otomatis.</p>
+                                        </div>
+                                        <button onclick="openScanModal()" class="shrink-0 px-3 py-2 rounded-xl bg-white text-blue-700 hover:bg-blue-50 font-bold text-xs shadow transition-transform active:scale-95 flex items-center gap-1.5">
+                                            <i class="fa-solid fa-expand"></i>
+                                            <span>Scan AI</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Real-Time Cubes Header -->
+                                <div class="flex items-center justify-between pt-1">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Status Kubus Real-Time</span>
+                                    <span class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Live IoT
+                                    </span>
+                                </div>
+
+                                <!-- Dynamic Cube Cards Container -->
+                                <div id="appCubesContainer" class="space-y-3">
+                                    <!-- Populated & updated dynamically by JS -->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Telemetry Control Panel, Hardware Rack Visualization & Activity Log -->
+                <div class="lg:col-span-7 space-y-6">
+                    
+                    <!-- Control & Simulation Triggers Card -->
+                    <div class="glass-panel rounded-3xl p-6 sm:p-7">
+                        <div class="flex flex-wrap items-center justify-between gap-4 mb-5">
+                            <div>
+                                <h3 class="font-display font-bold text-xl">Panel Kontrol & Simulasi Hardware</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Kontrol langsung sensor, profil material AI, dan pengujian keamanan darurat.</p>
+                            </div>
+                            <button onclick="resetAllCubes()" class="px-3.5 py-2 rounded-xl bg-slate-200/80 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-xs font-semibold transition-colors flex items-center gap-1.5">
+                                <i class="fa-solid fa-rotate-left"></i> Reset Kondisi Awal
+                            </button>
+                        </div>
+
+                        <!-- Action Buttons Grid -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-6">
+                            <button onclick="openScanModal()" class="p-4 rounded-2xl bg-blue-600/10 hover:bg-blue-600/20 border border-blue-600/30 text-left transition-all group">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="font-display font-bold text-sm text-blue-700 dark:text-cyan-300">Scan & Deteksi Bahan AI</span>
+                                    <i class="fa-solid fa-camera text-blue-600 dark:text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                                </div>
+                                <p class="text-xs text-slate-600 dark:text-slate-300">Simulasikan deteksi sepatu baru (Kanvas, Kulit, Suede, Mesh) & atur profil otomatis.</p>
+                            </button>
+
+                            <button id="btnSafetyTest" onclick="triggerSafetySimulation()" class="p-4 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-left transition-all group">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="font-display font-bold text-sm text-rose-700 dark:text-rose-400">Simulasi Peringatan Keamanan</span>
+                                    <i class="fa-solid fa-triangle-exclamation text-rose-600 dark:text-rose-400 group-hover:scale-110 transition-transform"></i>
+                                </div>
+                                <p class="text-xs text-slate-600 dark:text-slate-300">Uji proteksi <em>Overheating & Ozone Safety</em> saat suhu melewati batas aman (>55°C).</p>
+                            </button>
+                        </div>
+
+                        <!-- Live Telemetry Gauges -->
+                        <div class="grid grid-cols-3 gap-3.5">
+                            <div class="p-3.5 rounded-2xl bg-white/80 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700">
+                                <span class="text-[11px] text-slate-500 dark:text-slate-400 block">Suhu Chamber Rata-rata</span>
+                                <span id="telemetryTemp" class="font-display font-extrabold text-xl sm:text-2xl text-blue-600 dark:text-cyan-400">34.5°C</span>
+                                <span id="telemetryTempBadge" class="block text-[10px] text-emerald-600 dark:text-emerald-400 font-medium mt-0.5">Batas Aman (&lt;50°C)</span>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/80 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700">
+                                <span class="text-[11px] text-slate-500 dark:text-slate-400 block">Kadar Gas Ozon (O₃)</span>
+                                <span id="telemetryOzone" class="font-display font-extrabold text-xl sm:text-2xl text-indigo-600 dark:text-indigo-400">0.02 ppm</span>
+                                <span id="telemetryOzoneBadge" class="block text-[10px] text-emerald-600 dark:text-emerald-400 font-medium mt-0.5">Terkendali & Aman</span>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-white/80 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700">
+                                <span class="text-[11px] text-slate-500 dark:text-slate-400 block">Status Relay Daya</span>
+                                <span id="telemetryPower" class="font-display font-extrabold text-xl sm:text-2xl text-emerald-600 dark:text-emerald-400">AKTIF</span>
+                                <span id="telemetryPowerBadge" class="block text-[10px] text-slate-500 dark:text-slate-400 font-medium mt-0.5">Auto Cut-Off Siaga</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live IoT Cloud Event Logs -->
+                    <div class="glass-panel rounded-3xl p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="font-display font-bold text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-terminal text-blue-600 dark:text-cyan-400"></i>
+                                <span>Log Telemetri AIoT & Keputusan Sistem</span>
+                            </h4>
+                            <span class="text-[11px] font-mono text-slate-400">MQTT / Cloud Sync</span>
+                        </div>
+                        <div id="iotLogBox" class="h-44 overflow-y-auto rounded-2xl bg-slate-950 text-slate-200 p-4 font-mono text-xs space-y-2 border border-slate-800">
+                            <!-- Logs injected by JS -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 1 MAJOR BUSINESS RISK & MITIGASI KEAMANAN ==================== -->
+    <section id="risiko" class="py-16 sm:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="rounded-3xl p-8 sm:p-12 bg-gradient-to-br from-rose-950 via-slate-900 to-slate-950 text-white border border-rose-500/30 shadow-2xl relative overflow-hidden">
+                <!-- Background Warning Icon Watermark -->
+                <i class="fa-solid fa-triangle-exclamation text-[180px] text-rose-500/5 absolute -right-6 -bottom-6 pointer-events-none"></i>
+
+                <div class="relative z-10">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs font-bold tracking-wider mb-4">
+                        <i class="fa-solid fa-shield-virus"></i>
+                        <span>1 MAJOR BUSINESS RISK & SAFETY MITIGATION</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-5 space-y-4">
+                            <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-white">Overheating & Ozone Safety</h2>
+                            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                                Kegagalan pembacaan sensor saat pemanas (<em>heater</em>) terlalu panas atau pelepasan gas ozon berlebih dapat menimbulkan dampak serius jika tidak dimitigasi dengan sistem keamanan berlapis.
+                            </p>
+                            <div class="pt-2">
+                                <a href="#simulator" onclick="triggerSafetySimulation()" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm shadow-lg shadow-rose-600/30 transition-all">
+                                    <i class="fa-solid fa-bolt"></i>
+                                    <span>Simulasikan Auto Cut-Off Sekarang</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <!-- Risk Impact 1 -->
+                            <div class="p-5 rounded-2xl bg-white/5 border border-rose-500/25 backdrop-blur-sm">
+                                <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-3">
+                                    <i class="fa-solid fa-shoe-prints"></i>
+                                </div>
+                                <h3 class="font-display font-bold text-base text-amber-300 mb-1.5">Kerusakan Sepatu</h3>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    Suhu heater ekstrem merusak struktur lem sol serta membuat bahan kulit/suede menyusut dan retak.
+                                </p>
+                            </div>
+
+                            <!-- Risk Impact 2 -->
+                            <div class="p-5 rounded-2xl bg-white/5 border border-rose-500/25 backdrop-blur-sm">
+                                <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center mb-3">
+                                    <i class="fa-solid fa-lungs-virus"></i>
+                                </div>
+                                <h3 class="font-display font-bold text-base text-rose-300 mb-1.5">Gangguan Pernapasan</h3>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    Kebocoran gas ozon (O₃) berlebih berisiko mengiritasi saluran pernapasan penghuni kamar atau apartemen.
+                                </p>
+                            </div>
+
+                            <!-- Risk Impact 3 -->
+                            <div class="p-5 rounded-2xl bg-white/5 border border-rose-500/25 backdrop-blur-sm">
+                                <div class="w-10 h-10 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center mb-3">
+                                    <i class="fa-solid fa-fire-flame-curved"></i>
+                                </div>
+                                <h3 class="font-display font-bold text-base text-red-300 mb-1.5">Risiko Kebakaran</h3>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    Kegagalan pemutus daya listrik memicu panas berlebih (<em>thermal runaway</em>) dan potensi bahaya listrik.
+                                </p>
+                            </div>
+
+                            <!-- Mitigation Banner Spanning 3 Columns -->
+                            <div class="sm:col-span-3 p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-shield-halved text-lg"></i>
+                                </div>
+                                <div class="text-xs text-slate-200">
+                                    <strong class="text-emerald-300 block text-sm mb-0.5">Solusi Mitigasi ZODEQ (Hardware & Cloud Fail-Safe):</strong>
+                                    Dilengkapi <em>Thermal Fuse</em> pemutus arus otomatis saat suhu &gt;55°C, sensor konsentrasi Ozon dengan kunci magnetik pintu kubus, serta notifikasi peringatan darurat instan ke smartphone pengguna.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROFIL TIM KELOMPOK 8 ==================== -->
+    <section id="tim" class="py-16 sm:py-24 bg-slate-100/70 dark:bg-slate-900/50 border-t border-slate-200/70 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-14">
+                <span class="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-cyan-400">Internet of Things • AB 2</span>
+                <h2 class="font-display font-extrabold text-3xl sm:text-4xl mt-2 mb-3">Anggota Kelompok 8</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-sm">
+                    Tim pengembang konsep bisnis dan arsitektur AIoT <strong>ZODEQ Smart Shoe Care</strong>.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+                <!-- Member 1 -->
+                <div class="glass-panel glass-card-hover rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white font-display font-bold text-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-600/20">
+                        PM
+                    </div>
+                    <h3 class="font-display font-bold text-sm sm:text-base leading-snug mb-1">Putri Marsya Aulia</h3>
+                    <span class="inline-block px-2.5 py-1 rounded-lg bg-slate-200/70 dark:bg-slate-800 font-mono text-xs text-slate-600 dark:text-slate-300">14030126120015</span>
+                </div>
+
+                <!-- Member 2 -->
+                <div class="glass-panel glass-card-hover rounded-3xl p-6 text-center border-blue-500/30">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-teal-500 text-white font-display font-bold text-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-cyan-500/20">
+                        AN
+                    </div>
+                    <h3 class="font-display font-bold text-sm sm:text-base leading-snug mb-1">Aisyah Nur Azizah</h3>
+                    <span class="inline-block px-2.5 py-1 rounded-lg bg-slate-200/70 dark:bg-slate-800 font-mono text-xs text-slate-600 dark:text-slate-300">14030126120018</span>
+                </div>
+
+                <!-- Member 3 -->
+                <div class="glass-panel glass-card-hover rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-600 to-blue-500 text-white font-display font-bold text-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-600/20">
+                        BG
+                    </div>
+                    <h3 class="font-display font-bold text-sm sm:text-base leading-snug mb-1">Beauty Gabriela Hasianni Hasugian</h3>
+                    <span class="inline-block px-2.5 py-1 rounded-lg bg-slate-200/70 dark:bg-slate-800 font-mono text-xs text-slate-600 dark:text-slate-300">14030126130099</span>
+                </div>
+
+                <!-- Member 4 -->
+                <div class="glass-panel glass-card-hover rounded-3xl p-6 text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-600 text-white font-display font-bold text-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-700/20">
+                        AK
+                    </div>
+                    <h3 class="font-display font-bold text-sm sm:text-base leading-snug mb-1">Ainoor Katresnan Gusti</h3>
+                    <span class="inline-block px-2.5 py-1 rounded-lg bg-slate-200/70 dark:bg-slate-800 font-mono text-xs text-slate-600 dark:text-slate-300">14030126130102</span>
+                </div>
+
+                <!-- Member 5 -->
+                <div class="glass-panel glass-card-hover rounded-3xl p-6 text-center sm:col-span-2 lg:col-span-1">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 text-white font-display font-bold text-xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-sky-500/20">
+                        NA
+                    </div>
+                    <h3 class="font-display font-bold text-sm sm:text-base leading-snug mb-1">Nur Aida Salsabila</h3>
+                    <span class="inline-block px-2.5 py-1 rounded-lg bg-slate-200/70 dark:bg-slate-800 font-mono text-xs text-slate-600 dark:text-slate-300">14030126140186</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="py-10 border-t border-slate-200 dark:border-slate-800 text-center text-sm text-slate-500 dark:text-slate-400">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-center gap-2 mb-2">
+                <i class="fa-solid fa-microchip text-blue-600 dark:text-cyan-400"></i>
+                <span class="font-display font-bold text-slate-800 dark:text-slate-200">ZODEQ Smart Shoe Care</span>
+            </div>
+            <p class="text-xs">AIoT Business Analysis • Kelompok 8 (AB 2) • Mata Kuliah Internet of Things</p>
+        </div>
+    </footer>
+
+    <!-- ==================== MODAL: SCAN & DETEKSI AI ==================== -->
+    <div id="scanModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm">
+        <div class="w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden animate-fadeIn">
+            <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600/15 text-blue-600 dark:text-cyan-400 flex items-center justify-center">
+                        <i class="fa-solid fa-expand"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-base">Scan & Deteksi Material AI</h3>
+                        <p class="text-[11px] text-slate-500">Kalibrasi otomatis suhu & durasi perawatan</p>
+                    </div>
+                </div>
+                <button onclick="closeScanModal()" class="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-5 space-y-4">
+                <!-- Scanner Visual Frame -->
+                <div class="relative h-36 rounded-2xl bg-slate-950 border border-blue-500/40 flex flex-col items-center justify-center overflow-hidden">
+                    <div class="w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent absolute animate-scan shadow-[0_0_12px_#22d3ee]"></div>
+                    <i id="scanPreviewIcon" class="fa-solid fa-shoe-prints text-4xl text-cyan-400 mb-2"></i>
+                    <span id="scanStatusLabel" class="text-xs font-mono text-cyan-300">Pilih Kubus & Jenis Sepatu untuk Deteksi</span>
+                </div>
+
+                <!-- Target Cube Select -->
+                <div>
+                    <label class="block text-xs font-semibold mb-1.5">Pilih Target Kubus Rak:</label>
+                    <select id="scanCubeSelect" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        <option value="0">Kubus 01</option>
+                        <option value="1">Kubus 02</option>
+                        <option value="2">Kubus 03</option>
+                    </select>
+                </div>
+
+                <!-- Shoe Material Preset -->
+                <div>
+                    <label class="block text-xs font-semibold mb-1.5">Simulasi Hasil Scan Material Sepatu:</label>
+                    <select id="scanMaterialSelect" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        <option value="kanvas">Sepatu Sneakers (Kanvas) • Rekomendasi 45°C / 25 Mnt</option>
+                        <option value="mesh">Sepatu Lari / Sport (Mesh) • Rekomendasi 42°C / 20 Mnt</option>
+                        <option value="kulit">Sepatu Pantofel (Kulit) • Rekomendasi 36°C / 15 Mnt (Gentle)</option>
+                        <option value="suede">Sepatu Boots / Kasual (Suede) • Rekomendasi 35°C / 18 Mnt (Delicate)</option>
+                    </select>
+                </div>
+
+                <!-- Initial Condition -->
+                <div>
+                    <label class="block text-xs font-semibold mb-1.5">Kondisi Awal Sepatu Masuk:</label>
+                    <select id="scanConditionSelect" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        <option value="basah">Kehujanan / Sangat Lembap (Kelembapan 89%, VOC Tinggi)</option>
+                        <option value="sedang">Habis Beraktivitas (Kelembapan 76%, VOC Sedang)</option>
+                    </select>
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button onclick="closeScanModal()" class="w-1/3 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-xs font-semibold">Batal</button>
+                    <button onclick="applyScanDetection()" class="w-2/3 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 text-white text-xs font-bold shadow-lg shadow-blue-600/25 hover:opacity-95">
+                        Terapkan Profil AI & Mulai
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== FLOATING NOTIFICATION TOAST ==================== -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 space-y-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        // --- 1. THEME MANAGEMENT (LIGHT / DARK GLASSMORPHISM) ---
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlEl = document.documentElement;
+
+        // Default to dark mode for futuristic AIoT feel, or respect saved preference
+        const savedTheme = localStorage.getItem('zodeq-theme');
+        if (savedTheme === 'light') {
+            htmlEl.classList.remove('dark');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        } else {
+            htmlEl.classList.add('dark');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            htmlEl.classList.toggle('dark');
+            const isDark = htmlEl.classList.contains('dark');
+            localStorage.setItem('zodeq-theme', isDark ? 'dark' : 'light');
+            themeIcon.className = isDark ? 'fa-solid fa-sun text-sm text-amber-400' : 'fa-solid fa-moon text-sm';
+        });
+
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Mobile Comparison Switcher
+        function switchComparison(mode) {
+            const cardBiasa = document.getElementById('cardCompBiasa');
+            const cardZodeq = document.getElementById('cardCompZodeq');
+            const btnBiasa = document.getElementById('btnCompBiasa');
+            const btnZodeq = document.getElementById('btnCompZodeq');
+
+            if (mode === 'biasa') {
+                cardBiasa.classList.remove('hidden');
+                cardZodeq.classList.add('hidden');
+                btnBiasa.className = 'px-4 py-2 rounded-lg text-xs font-semibold transition-all bg-white dark:bg-slate-700 shadow';
+                btnZodeq.className = 'px-4 py-2 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-300';
+            } else {
+                cardBiasa.classList.add('hidden');
+                cardZodeq.classList.remove('hidden');
+                btnZodeq.className = 'px-4 py-2 rounded-lg text-xs font-semibold transition-all bg-blue-600 text-white shadow';
+                btnBiasa.className = 'px-4 py-2 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-300';
+            }
+        }
+
+        // --- 2. INITIAL STATE FOR ZODEQ IOT SIMULATOR (MATCHING SLIDE 10) ---
+        const initialCubesData = [
+            {
+                id: 1,
+                code: 'KUBUS 01',
+                name: 'Sepatu Sneakers (Kanvas)',
+                material: 'Kanvas',
+                humidity: 88,
+                voc: 'Sedang',
+                status: 'Perlu Perawatan',
+                statusType: 'warning', // warning | active | safe | danger
+                targetTemp: 45,
+                durationMin: 25,
+                progress: 0,
+                isTreating: false
+            },
+            {
+                id: 2,
+                code: 'KUBUS 02',
+                name: 'Sepatu Lari / Sport (Mesh)',
+                material: 'Mesh',
+                humidity: 87,
+                voc: 'Sedang',
+                status: 'Lembap',
+                statusType: 'warning',
+                targetTemp: 42,
+                durationMin: 20,
+                progress: 0,
+                isTreating: false
+            },
+            {
+                id: 3,
+                code: 'KUBUS 03',
+                name: 'Sepatu Pantofel (Kulit)',
+                material: 'Kulit',
+                humidity: 29,
+                voc: 'Rendah',
+                status: 'Kering & Segar',
+                statusType: 'safe',
+                targetTemp: 36,
+                durationMin: 15,
+                progress: 100,
+                isTreating: false
+            }
+        ];
+
+        let cubes = JSON.parse(JSON.stringify(initialCubesData));
+        let activeIntervals = {};
+        let isSafetyTripped = false;
+
+        // --- 3. RENDER SMARTPHONE APP CUBES ---
+        function renderAppCubes() {
+            const container = document.getElementById('appCubesContainer');
+            container.innerHTML = '';
+
+            cubes.forEach((cube, index) => {
+                // Determine badge colors based on statusType
+                let badgeClasses = 'bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300';
+                if (cube.statusType === 'safe') {
+                    badgeClasses = 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300';
+                } else if (cube.statusType === 'active') {
+                    badgeClasses = 'bg-blue-100 text-blue-800 dark:bg-blue-500/25 dark:text-cyan-300 animate-pulse';
+                } else if (cube.statusType === 'danger') {
+                    badgeClasses = 'bg-rose-100 text-rose-800 dark:bg-rose-500/25 dark:text-rose-300';
+                }
+
+                // Determine action button HTML
+                let actionButtonHTML = '';
+                if (isSafetyTripped) {
+                    actionButtonHTML = `
+                        <button disabled class="px-3 py-1.5 rounded-xl bg-rose-500/20 text-rose-600 dark:text-rose-400 text-[11px] font-bold cursor-not-allowed">
+                            Daya Diputus
+                        </button>
+                    `;
+                } else if (cube.isTreating) {
+                    actionButtonHTML = `
+                        <button onclick="stopTreatment(${index})" class="px-3 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-rose-500 hover:text-white text-[11px] font-semibold transition-colors">
+                            Hentikan
+                        </button>
+                    `;
+                } else if (cube.statusType === 'safe') {
+                    actionButtonHTML = `
+                        <button onclick="showCubeDetail(${index})" class="px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-700/80 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-[11px] font-semibold transition-colors">
+                            Detail
+                        </button>
+                    `;
+                } else {
+                    actionButtonHTML = `
+                        <button onclick="startTreatment(${index})" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-semibold shadow-md shadow-blue-600/20 transition-all active:scale-95">
+                            Rawat Sekarang
+                        </button>
+                    `;
+                }
+
+                // Progress bar during active AI treatment
+                const progressHTML = cube.isTreating ? `
+                    <div class="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-700/70">
+                        <div class="flex justify-between text-[10px] font-medium text-blue-600 dark:text-cyan-400 mb-1">
+                            <span><i class="fa-solid fa-fire-flame-simple mr-1"></i>AI Mode: ${cube.targetTemp}°C (${cube.material})</span>
+                            <span>${cube.progress}%</span>
+                        </div>
+                        <div class="w-full h-1.5 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-blue-600 to-cyan-400 transition-all duration-300" style="width: ${cube.progress}%"></div>
+                        </div>
+                    </div>
+                ` : '';
+
+                const cardHTML = `
+                    <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-800/95 border border-slate-200/80 dark:border-slate-700/80 shadow-sm transition-all">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[11px] font-bold tracking-wider text-blue-600 dark:text-cyan-400">${cube.code}</span>
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${badgeClasses}">${cube.status}</span>
+                        </div>
+                        <h5 class="font-display font-bold text-sm text-slate-900 dark:text-white mb-2.5">${cube.name}</h5>
+                        
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-3 text-xs">
+                                <div class="flex items-center gap-1.5">
+                                    <i class="fa-solid fa-droplet text-blue-500"></i>
+                                    <div>
+                                        <span class="text-[10px] text-slate-400 block leading-none">Kelembapan</span>
+                                        <strong class="font-bold text-slate-800 dark:text-slate-100">${cube.humidity}%</strong>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <i class="fa-solid fa-wind text-cyan-500"></i>
+                                    <div>
+                                        <span class="text-[10px] text-slate-400 block leading-none">Bau VOC</span>
+                                        <strong class="font-bold text-slate-800 dark:text-slate-100">${cube.voc}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            ${actionButtonHTML}
+                        </div>
+                        ${progressHTML}
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', cardHTML);
+            });
+
+            updateTelemetrySummary();
+        }
+
+        // --- 4. AI TREATMENT CYCLE SIMULATION ---
+        function startTreatment(index) {
+            if (isSafetyTripped) {
+                showToast('Sistem dalam mode proteksi keamanan! Reset sistem terlebih dahulu.', 'danger');
+                return;
+            }
+            const cube = cubes[index];
+            if (cube.isTreating) return;
+
+            cube.isTreating = true;
+            cube.status = 'Merawat (AI)...';
+            cube.statusType = 'active';
+            cube.progress = 10;
+
+            addLog(`[AI-ENGINE] Memulai perawatan ${cube.code} (${cube.name}). Profil: Suhu ${cube.targetTemp}°C, Durasi ${cube.durationMin} mnt.`);
+            showToast(`Perawatan AI dimulai untuk ${cube.code} (${cube.targetTemp}°C)`, 'info');
+            renderAppCubes();
+
+            activeIntervals[index] = setInterval(() => {
+                if (isSafetyTripped) {
+                    clearInterval(activeIntervals[index]);
+                    return;
+                }
+
+                cube.progress += 15;
+                // Gradually reduce humidity toward 26-29%
+                if (cube.humidity > 28) {
+                    cube.humidity = Math.max(27, cube.humidity - 9);
+                }
+                if (cube.progress >= 55 && cube.voc !== 'Rendah') {
+                    cube.voc = 'Rendah';
+                    addLog(`[SENSOR-VOC] ${cube.code}: Sterilisasi UV/Ozon berhasil menetralkan gas bau VOC menjadi Rendah.`);
+                }
+
+                if (cube.progress >= 100) {
+                    clearInterval(activeIntervals[index]);
+                    cube.progress = 100;
+                    cube.isTreating = false;
+                    cube.humidity = 27;
+                    cube.voc = 'Rendah';
+                    cube.status = 'Kering & Segar';
+                    cube.statusType = 'safe';
+
+                    addLog(`[IOT-CLOUD] ${cube.code} selesai! Kelembapan 27%, VOC Rendah. Heater & UV dimatikan otomatis (Hemat Energi).`);
+                    showToast(`Notifikasi HP: ${cube.name} di ${cube.code} sudah Kering & Siap Dipakai!`, 'success');
+                }
+
+                renderAppCubes();
+            }, 850);
+        }
+
+        function stopTreatment(index) {
+            clearInterval(activeIntervals[index]);
+            const cube = cubes[index];
+            cube.isTreating = false;
+            cube.status = cube.humidity > 50 ? 'Perlu Perawatan' : 'Kering & Segar';
+            cube.statusType = cube.humidity > 50 ? 'warning' : 'safe';
+            addLog(`[USER-CTRL] Siklus perawatan ${cube.code} dihentikan manual oleh pengguna.`);
+            renderAppCubes();
+        }
+
+        function showCubeDetail(index) {
+            const cube = cubes[index];
+            showToast(`${cube.code}: ${cube.name} • Kondisi Optimal (${cube.humidity}% Lembap, VOC ${cube.voc}, Suhu Terakhir ${cube.targetTemp}°C).`, 'success');
+            addLog(`[INFO] Pengguna memeriksa detail kondisi ${cube.code}: Sepatu steril & bebas jamur.`);
+        }
+
+        // --- 5. SCAN & DETEKSI AI MODAL LOGIC ---
+        function openScanModal() {
+            if (isSafetyTripped) {
+                showToast('Reset peringatan keamanan terlebih dahulu sebelum melakukan scan baru.', 'danger');
+                return;
+            }
+            const modal = document.getElementById('scanModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeScanModal() {
+            const modal = document.getElementById('scanModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function applyScanDetection() {
+            const cubeIdx = parseInt(document.getElementById('scanCubeSelect').value);
+            const materialKey = document.getElementById('scanMaterialSelect').value;
+            const conditionKey = document.getElementById('scanConditionSelect').value;
+
+            // Stop any existing interval on target cube
+            if (activeIntervals[cubeIdx]) clearInterval(activeIntervals[cubeIdx]);
+
+            const materialProfiles = {
+                kanvas: { name: 'Sepatu Sneakers (Kanvas)', material: 'Kanvas', temp: 45, duration: 25 },
+                mesh: { name: 'Sepatu Lari / Sport (Mesh)', material: 'Mesh', temp: 42, duration: 20 },
+                kulit: { name: 'Sepatu Pantofel (Kulit)', material: 'Kulit', temp: 36, duration: 15 },
+                suede: { name: 'Sepatu Boots / Kasual (Suede)', material: 'Suede', temp: 35, duration: 18 }
+            };
+
+            const selectedMat = materialProfiles[materialKey];
+            const isVeryWet = conditionKey === 'basah';
+
+            cubes[cubeIdx] = {
+                id: cubeIdx + 1,
+                code: `KUBUS 0${cubeIdx + 1}`,
+                name: selectedMat.name,
+                material: selectedMat.material,
+                humidity: isVeryWet ? 89 : 76,
+                voc: isVeryWet ? 'Tinggi' : 'Sedang',
+                status: 'Perlu Perawatan',
+                statusType: 'warning',
+                targetTemp: selectedMat.temp,
+                durationMin: selectedMat.duration,
+                progress: 0,
+                isTreating: false
+            };
+
+            addLog(`[AI-SCAN] Terdeteksi ${selectedMat.name} di KUBUS 0${cubeIdx + 1}. Kalibrasi AI: ${selectedMat.temp}°C selama ${selectedMat.duration} menit.`);
+            closeScanModal();
+            renderAppCubes();
+            startTreatment(cubeIdx);
+        }
+
+        // --- 6. SAFETY RISK SIMULATION (OVERHEATING & OZONE CUT-OFF) ---
+        function triggerSafetySimulation() {
+            // Stop all running treatments immediately
+            Object.keys(activeIntervals).forEach(k => clearInterval(activeIntervals[k]));
+            isSafetyTripped = true;
+
+            cubes.forEach(c => {
+                c.isTreating = false;
+                c.status = 'Daya Diputus (Aman)';
+                c.statusType = 'danger';
+            });
+
+            // Update App Banner to Emergency Alert
+            const banner = document.getElementById('appSafetyBanner');
+            const statusText = document.getElementById('appSystemStatusText');
+            const connDot = document.getElementById('rackConnectionDot');
+
+            banner.className = 'p-3.5 rounded-2xl bg-rose-600 text-white shadow-lg shadow-rose-600/30 transition-all';
+            statusText.className = 'text-xs text-rose-100 font-semibold mt-0.5 flex items-center gap-1.5';
+            statusText.innerHTML = `<i class="fa-solid fa-triangle-exclamation animate-bounce"></i><span>PERINGATAN: Suhu >55°C! Daya Diputus Otomatis</span>`;
+            connDot.className = 'w-2 h-2 rounded-full bg-rose-500 animate-ping inline-block';
+
+            // Update Telemetry Cards
+            document.getElementById('telemetryTemp').textContent = '58.4°C';
+            document.getElementById('telemetryTemp').className = 'font-display font-extrabold text-xl sm:text-2xl text-rose-600 dark:text-rose-400';
+            document.getElementById('telemetryTempBadge').textContent = 'OVERHEATING DETECTED!';
+            document.getElementById('telemetryTempBadge').className = 'block text-[10px] text-rose-600 dark:text-rose-400 font-bold mt-0.5';
+
+            document.getElementById('telemetryOzone').textContent = '0.09 ppm';
+            document.getElementById('telemetryOzone').className = 'font-display font-extrabold text-xl sm:text-2xl text-amber-600 dark:text-amber-400';
+            document.getElementById('telemetryOzoneBadge').textContent = 'Katup Ozon Dikunci';
+            document.getElementById('telemetryOzoneBadge').className = 'block text-[10px] text-amber-600 dark:text-amber-400 font-bold mt-0.5';
+
+            document.getElementById('telemetryPower').textContent = 'CUT-OFF';
+            document.getElementById('telemetryPower').className = 'font-display font-extrabold text-xl sm:text-2xl text-rose-600 dark:text-rose-400';
+            document.getElementById('telemetryPowerBadge').textContent = 'Relay Listrik Terputus';
+
+            addLog(`[ALERT-CRITICAL] Anomali sensor terdeteksi! Suhu mencapai 58.4°C (batas aman 50°C).`);
+            addLog(`[FAIL-SAFE] Thermal Cut-Off memutus arus heater & generator ozon dalam <0.2 detik. Kebakaran & kerusakan sepatu dicegah!`);
+            showToast('PERINGATAN KEAMANAN: Suhu melewati batas aman! Sistem memutus daya listrik otomatis.', 'danger');
+
+            renderAppCubes();
+        }
+
+        function resetAllCubes() {
+            Object.keys(activeIntervals).forEach(k => clearInterval(activeIntervals[k]));
+            isSafetyTripped = false;
+            cubes = JSON.parse(JSON.stringify(initialCubesData));
+
+            // Restore App Banner
+            const banner = document.getElementById('appSafetyBanner');
+            const statusText = document.getElementById('appSystemStatusText');
+            const connDot = document.getElementById('rackConnectionDot');
+
+            banner.className = 'p-3.5 rounded-2xl bg-white dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700 shadow-sm transition-all';
+            statusText.className = 'text-xs text-emerald-600 dark:text-emerald-400 font-medium mt-0.5 flex items-center gap-1.5';
+            statusText.innerHTML = `<i class="fa-solid fa-shield-check"></i><span>3 Kubus Aktif • Sistem Keamanan Normal</span>`;
+            connDot.className = 'w-2 h-2 rounded-full bg-emerald-500 inline-block';
+
+            // Restore Telemetry
+            document.getElementById('telemetryTemp').className = 'font-display font-extrabold text-xl sm:text-2xl text-blue-600 dark:text-cyan-400';
+            document.getElementById('telemetryTempBadge').textContent = 'Batas Aman (<50°C)';
+            document.getElementById('telemetryTempBadge').className = 'block text-[10px] text-emerald-600 dark:text-emerald-400 font-medium mt-0.5';
+
+            document.getElementById('telemetryOzone').textContent = '0.02 ppm';
+            document.getElementById('telemetryOzone').className = 'font-display font-extrabold text-xl sm:text-2xl text-indigo-600 dark:text-indigo-400';
+            document.getElementById('telemetryOzoneBadge').textContent = 'Terkendali & Aman';
+            document.getElementById('telemetryOzoneBadge').className = 'block text-[10px] text-emerald-600 dark:text-emerald-400 font-medium mt-0.5';
+
+            document.getElementById('telemetryPower').textContent = 'AKTIF';
+            document.getElementById('telemetryPower').className = 'font-display font-extrabold text-xl sm:text-2xl text-emerald-600 dark:text-emerald-400';
+            document.getElementById('telemetryPowerBadge').textContent = 'Auto Cut-Off Siaga';
+
+            addLog(`[SYSTEM-RESET] Smart Rack #01 dikembalikan ke status normal. Semua sensor siap memantau.`);
+            showToast('Sistem Smart Rack #01 berhasil di-reset ke kondisi awal.', 'info');
+            renderAppCubes();
+        }
+
+        function updateTelemetrySummary() {
+            if (isSafetyTripped) return;
+            const activeCube = cubes.find(c => c.isTreating);
+            const tempEl = document.getElementById('telemetryTemp');
+            if (activeCube) {
+                tempEl.textContent = `${activeCube.targetTemp}.0°C`;
+            } else {
+                tempEl.textContent = '31.2°C';
+            }
+        }
+
+        // --- 7. LOGGING & TOAST HELPERS ---
+        function addLog(message) {
+            const logBox = document.getElementById('iotLogBox');
+            const now = new Date();
+            const timeStr = now.toTimeString().split(' ')[0];
+            const entry = document.createElement('div');
+            
+            let colorClass = 'text-slate-300';
+            if (message.includes('[ALERT-CRITICAL]') || message.includes('[FAIL-SAFE]')) colorClass = 'text-rose-400 font-semibold';
+            else if (message.includes('[AI-ENGINE]') || message.includes('[AI-SCAN]')) colorClass = 'text-cyan-400';
+            else if (message.includes('[IOT-CLOUD]')) colorClass = 'text-emerald-400';
+
+            entry.className = colorClass;
+            entry.innerHTML = `<span class="text-slate-500">[${timeStr}]</span> ${message}`;
+            logBox.prepend(entry);
+        }
+
+        function showToast(text, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            let bgClass = 'bg-slate-900 text-white border-blue-500/50';
+            let icon = 'fa-circle-info text-cyan-400';
+            if (type === 'success') {
+                bgClass = 'bg-emerald-950 text-emerald-50 border-emerald-500/60';
+                icon = 'fa-circle-check text-emerald-400';
+            } else if (type === 'danger') {
+                bgClass = 'bg-rose-950 text-rose-50 border-rose-500/70';
+                icon = 'fa-triangle-exclamation text-rose-400';
+            }
+
+            toast.className = `pointer-events-auto p-3.5 rounded-2xl border shadow-2xl backdrop-blur-md text-xs font-medium flex items-start gap-2.5 transition-all duration-300 ${bgClass}`;
+            toast.innerHTML = `
+                <i class="fa-solid ${icon} text-sm mt-0.5"></i>
+                <span class="leading-snug">${text}</span>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(10px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 4200);
+        }
+
+        // Initialize on Window Load
+        window.onload = function() {
+            renderAppCubes();
+            addLog('[BOOT] ZODEQ Smart Rack #01 (Kos Tembalang) terhubung ke Cloud AIoT.');
+            addLog('[SENSOR] Kubus 01 (88% Lembap) & Kubus 02 (87% Lembap) terdeteksi membutuhkan perawatan.');
+        };
+    </script>
+</body>
+</html>
